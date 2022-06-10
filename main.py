@@ -1,17 +1,17 @@
 #Date: Wednesday 8 June
 #Name: Christine Calantog
 
-'''This program is to keep track of Julie's party hire '''
+'''This program is to keep track of Julie's party hire'''
 
 from tkinter import *
 from tkinter import ttk
 
-#quit subroutine
-def quit():
-    main_window.destroy()
+'''----------------------------------------- Set up GUI -----------------------------------------
+Create all the default buttons, labels, and entry boxes. Put them in the correct grid location.'''
 
 #create the buttons
-    #update,print,delete,quit
+    #update(append),print,delete(row),quit
+
 def setup_buttons():
     Button(main_window, text="Update",command=append_details) .grid(column=0,row=1)
     Button(main_window, text="Print",command=print_hire_details) .grid(column=1,row=1)
@@ -19,6 +19,7 @@ def setup_buttons():
     Button(main_window, text="Delete",command=delete_row) .grid(column=2,row=6)
 
 #create the labels (entries)
+           #these are the global variables that are used, accessible throughout the program
     global hire_details, entry_name,entry_receiptnumber,entry_item,entry_numberhired, total_entries, delete_item
     #customer name
     Label(main_window, text="Customer Name") .grid(column=0,row=2)
@@ -43,8 +44,11 @@ def setup_buttons():
     delete_item = Entry(main_window)
     delete_item .grid(column=1,row=6)
 
-#table of outputs
-#print details of customers' inputs 
+'''----------------- Attach a function to the buttons -----------------'''
+
+#PRINT button
+    #print the customers' details into a table
+
 def print_hire_details():
     global total_entries, name_count, frame
     name_count = 0
@@ -64,7 +68,9 @@ def print_hire_details():
         Label(frame, text=(hire_details[name_count][3])).grid(column=4,row=name_count+8)
         name_count +=  1
 
-#add the next customer to the list
+#UPDATE button
+    #clear previous inputs to add the next customer to the list
+        
 def append_details():
     global hire_details, entry_name,entry_receiptnumber,entry_item,entry_numberhired, total_entries
     #append each item to its own area of the list
@@ -76,8 +82,8 @@ def append_details():
     entry_numberhired.delete(0,'end')
     total_entries +=  1
     
-#delete a row from the list
-    #when an item is returned
+#DELETE button
+    #delete a row when an item is returned
 def delete_row ():
     global hire_details, delete_item, total_entries, name_count
     del hire_details[int(delete_item.get())]
@@ -87,13 +93,20 @@ def delete_row ():
         widget.destroy()
         frame.pack_forget()
         print_hire_details()
-    
-#validity checker
-#cannot be blank and specific to data input
+
+#QUIT button
+    #subroutine to exit the program
+def quit():
+    main_window.destroy()
+
+'''--------------- Check for validity ---------------
+Input cannot be blank and is specific to data type'''
+ 
 def check_inputs():
     pass
 
-#start the program running
+'''----------- Start the program running -----------'''
+
 def main():
     global main_window 
     global hire_details, total_entries, frame
