@@ -50,21 +50,22 @@ def setup_buttons():
     #print the customers' details into a table
 
 def print_hire_details():
-    global hire_details, total_entries, name_count
+    global hire_details, total_entries, name_count, frame
     name_count = 0
     #column headings
-    Label(main_window, font='Helvetica 10 bold',text="Row").grid(column=0,row=7)
-    Label(main_window, font='Helvetica 10 bold',text="Customer Name").grid(column=1,row=7)
-    Label(main_window, font='Helvetica 10 bold',text="Receipt Number").grid(column=2,row=7)
-    Label(main_window, font='Helvetica 10 bold',text="Item Hired").grid(column=3,row=7)
-    Label(main_window, font='Helvetica 10 bold',text="Number Hired").grid(column=4,row=7)
+    Label(frame, font='Helvetica 10 bold',text="Row").grid(column=0,row=7)
+    Label(frame, font='Helvetica 10 bold',text="Customer Name").grid(column=1,row=7)
+    Label(frame, font='Helvetica 10 bold',text="Receipt Number").grid(column=2,row=7)
+    Label(frame, font='Helvetica 10 bold',text="Item Hired").grid(column=3,row=7)
+    Label(frame, font='Helvetica 10 bold',text="Number Hired").grid(column=4,row=7)
+    frame.grid(column =1, row=7)
     #each item on the list as a separate row
     while name_count < total_entries :
-        Label(main_window, text=name_count).grid(column=0,row=name_count+8) 
-        Label(main_window, text=(hire_details[name_count][0])).grid(column=1,row=name_count+8)
-        Label(main_window, text=(hire_details[name_count][1])).grid(column=2,row=name_count+8)
-        Label(main_window, text=(hire_details[name_count][2])).grid(column=3,row=name_count+8)
-        Label(main_window, text=(hire_details[name_count][3])).grid(column=4,row=name_count+8)
+        Label(frame, text=name_count).grid(column=0,row=name_count+8) 
+        Label(frame, text=(hire_details[name_count][0])).grid(column=1,row=name_count+8)
+        Label(frame, text=(hire_details[name_count][1])).grid(column=2,row=name_count+8)
+        Label(frame, text=(hire_details[name_count][2])).grid(column=3,row=name_count+8)
+        Label(frame, text=(hire_details[name_count][3])).grid(column=4,row=name_count+8)
         name_count +=  1
 
 #UPDATE (append) button
@@ -94,9 +95,9 @@ def delete_row ():
     del hire_details[int(delete_item.get())]
     total_entries = - 1
     delete_item.delete(0,'end')
-    for widget in main_window.winfo_children():
+    for widget in frame.winfo_children():
         widget.destroy()
-        main_window.pack_forget()
+        frame.pack_forget()
     #print item to own area of list
         print_hire_details()
 
@@ -113,7 +114,7 @@ Requirements:
 '''
 
 def check_inputs():
-    global hire_details, total_entries,entry_name,entry_receiptnumber,entry_item,entry_numberhired, total_entries 
+    global hire_details, total_entries,entry_name,entry_receiptnumber,entry_item,entry_numberhired
     entry_check=0
     Label(main_window, text="                                                                ") .grid(column=2, row=2)
     Label(main_window, text="                                                                ") .grid(column=2, row=3)
@@ -186,13 +187,14 @@ def check_inputs():
 
 def main():
     global main_window 
-    global hire_details, total_entries,entry_name,entry_receiptnumber,entry_item,entry_numberhired, total_entries
+    global hire_details, total_entries,entry_name,entry_receiptnumber,entry_item,entry_numberhired, total_entries, frame
     #empty list for the details
     hire_details = []
     total_entries = 0
     #GUI
     main_window = Tk()
     main_window.title("Julie's Party Hire")
+    frame = Frame(main_window)
     setup_buttons()
     main_window.mainloop()
 main()
