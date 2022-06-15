@@ -1,6 +1,3 @@
-#Date: Wednesday 8 June
-#Name: Christine Calantog
-
 '''This program is to keep track of Julie's party hire'''
 
 from tkinter import *
@@ -82,7 +79,8 @@ def append_details():
     #clear the boxes
     entry_name.delete(0,'end')
     entry_receiptnumber.delete(0,'end')
-    entry_item.delete(0,'end')
+    #combobox cleared
+    entry_item.set('')
     entry_numberhired.delete(0,'end')
     delete_item.delete(0, 'end')
     total_entries +=1
@@ -103,9 +101,9 @@ def delete_row ():
         print_hire_details()
     #checking if delete_item is an integer
     except IndexError:
-        Label(main_window, fg='red', text="(Numbers only)").grid(column=2,row=6,sticky=W)
+        Label(main_window, fg='red', text="(Integers only)").grid(column=2,row=6,sticky=W)
     except ValueError:
-        Label(main_window, fg='red', text="(Numbers only)").grid(column=2,row=6,sticky=W)
+        Label(main_window, fg='red', text="(Integers only)").grid(column=2,row=6,sticky=W)
 
 #QUIT button
     #subroutine to exit the program
