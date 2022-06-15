@@ -15,8 +15,8 @@ Create all the default buttons, labels, and entry boxes. Put them in the correct
 def setup_buttons():
     Button(main_window, text="Update",command=check_inputs) .grid(column=0,row=1)
     Button(main_window, text="Print",command=print_hire_details) .grid(column=1,row=1)
-    Button(main_window, text="Quit",command=quit) .grid(column=2,row=1)
-    Button(main_window, text="Delete",command=delete_row) .grid(column=2,row=6)
+    Button(main_window, text="Quit",command=quit) .grid(column=2,row=1,sticky=W)
+    Button(main_window, text="Delete",command=delete_row) .grid(column=3,row=6,sticky=E)
 
 #creating the labels (entries)
            #these are the global variables that are used, accessible throughout the program
@@ -91,15 +91,21 @@ def append_details():
     #delete a row when an item is returned
 def delete_row ():
     global hire_details, delete_item, total_entries, name_count
+    try:
     #which row to delete
-    del hire_details[int(delete_item.get())]
-    total_entries = - 1
-    delete_item.delete(0,'end')
-    for widget in frame.winfo_children():
-        widget.destroy()
+        del hire_details[int(delete_item.get())]
+        total_entries = - 1
+        delete_item.delete(0,'end')
+        for widget in frame.winfo_children():
+            widget.destroy()
         frame.pack_forget()
     #print item to own area of list
         print_hire_details()
+    #checking if delete_item is an integer
+    except IndexError:
+        Label(main_window, fg='red', text="(Numbers only)").grid(column=2,row=6,sticky=W)
+    except ValueError:
+        Label(main_window, fg='red', text="(Numbers only)").grid(column=2,row=6,sticky=W)
 
 #QUIT button
     #subroutine to exit the program
@@ -116,10 +122,10 @@ Requirements:
 def check_inputs():
     global hire_details, total_entries,entry_name,entry_receiptnumber,entry_item,entry_numberhired
     entry_check=0
-    Label(main_window, text="                                                                ") .grid(column=2, row=2)
-    Label(main_window, text="                                                                ") .grid(column=2, row=3)
-    Label(main_window, text="                                                                ") .grid(column=2, row=4)
-    Label(main_window, text="                                                                ") .grid(column=2, row=5)
+    Label(main_window, text="                                                       ") .grid(column=2, row=2)
+    Label(main_window, text="                                                       ") .grid(column=2, row=3)
+    Label(main_window, text="                                                       ") .grid(column=2, row=4)
+    Label(main_window, text="                                                       ") .grid(column=2, row=5)
 
 #customer name 
     #cannot be blank
@@ -148,13 +154,13 @@ def check_inputs():
             hasAlpha2 = True
         elif y.isspace():
             hasSpace2 = True
-    #correct data type (integer)
-    if entry_receiptnumber.get().isdigit():
+    #correct data type (integer), must be 6 digits
+    if entry_receiptnumber.get().isdigit() and len(entry_receiptnumber.get()) == 6:
         Label(main_window, text="                  ").grid(column=2,row=3,sticky=W)
         Label(main_window, text="                  ").grid(column=2,row=3,sticky=W)
         entry_check = 0
     else:
-        Label(main_window, fg='red', text="Required (Numbers)").grid(column=2,row=3,sticky=W)
+        Label(main_window, fg='red', text="Required (6 Digits)").grid(column=2,row=3,sticky=W)
         entry_check = 1
 
 #item hired
@@ -171,8 +177,8 @@ def check_inputs():
             Label(main_window, text="                  ").grid(column=2,row=5,sticky=W)
             entry_check = 0
         else:
-            Label(main_window, fg='red', text="Required (Numbers 1-500").grid(column=2,row=5,sticky=W)
-            Label(main_window, fg='red', text="Required (Numbers 1-500)").grid(column=2,row=5,sticky=W)
+            Label(main_window, fg='red', text="Required (Numbers 1-500").grid(column=1,row=5,sticky=W)
+            Label(main_window, fg='red', text="Required (Numbers 1-500)").grid(column=1,row=5,sticky=W)
             entry_check = 1  
     else:
         Label(main_window, fg='red', text="Required (Numbers 1-500)").grid(column=2,row=5,sticky=W)
@@ -198,3 +204,8 @@ def main():
     setup_buttons()
     main_window.mainloop()
 main()
+
+
+
+
+
